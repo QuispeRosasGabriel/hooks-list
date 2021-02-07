@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer, useMemo } from 'react'
+import React, { useState, useEffect, useReducer, useMemo, useRef } from 'react'
 import { ADD_TO_FAVORITES } from '../global/Types';
 
 const initialState = {
@@ -25,8 +25,10 @@ const Characters = () => {
     const [search, setSearch] = useState<string>('');
     const [favorites, dispatch] = useReducer(favoriteReducer, initialState);
 
-    const handleSearch = (ev: any) => {
-        setSearch(ev.target.value);
+    const searchInputRef = useRef<any>(null);
+
+    const handleSearch = () => {
+        setSearch(searchInputRef?.current?.value);
     };
 
     const handleClick = (favorite: any) => {
@@ -56,7 +58,9 @@ const Characters = () => {
             ))}
 
             <div>
-                <input type="text" value={search} onChange={handleSearch} />
+                <input type="text" value={search}
+                ref={searchInputRef}
+                onChange={handleSearch} />
             </div>
 
             {filteredUsers?.map((character: any) => (
