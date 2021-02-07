@@ -1,5 +1,11 @@
-import React, { useState, useEffect, useReducer, useMemo, useRef } from 'react'
+import React, { useState,
+     useEffect,
+     useReducer,
+     useMemo,
+     useRef,
+     useCallback } from 'react'
 import { ADD_TO_FAVORITES } from '../global/Types';
+import Search from  './Search';
 
 const initialState = {
     favorites: [],
@@ -27,9 +33,9 @@ const Characters = () => {
 
     const searchInputRef = useRef<any>(null);
 
-    const handleSearch = () => {
+    /*const handleSearch = () => {
         setSearch(searchInputRef?.current?.value);
-    };
+    };*/
 
     const handleClick = (favorite: any) => {
         dispatch({ type: ADD_TO_FAVORITES, payload: favorite });
@@ -57,12 +63,7 @@ const Characters = () => {
                 </li>
             ))}
 
-            <div>
-                <input type="text" value={search}
-                ref={searchInputRef}
-                onChange={handleSearch} />
-            </div>
-
+            <Search search={search} searchInputRef={searchInputRef} handleSearch={handleSearch} />
             {filteredUsers?.map((character: any) => (
                 <div key={character.id}>
                     <h2>{character?.name}</h2>
