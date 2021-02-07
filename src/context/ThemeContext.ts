@@ -1,6 +1,8 @@
 import React, {createContext} from 'react'
-import {  } from 'vm'
 
-const ThemeContext = createContext('');
+const ThemeContext = createContext({
+    color: '',
+    background: ''
+});
 
 export default ThemeContext
