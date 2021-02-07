@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react'
+import React, { useState, useEffect, useReducer, useMemo } from 'react'
 import { ADD_TO_FAVORITES } from '../global/Types';
 
 const initialState = {
@@ -10,10 +10,10 @@ const favoriteReducer = (state: any, action: any) => {
         case ADD_TO_FAVORITES:
             return {
                 ...state,
-                favorites: [...state.favorites, action.payload ]
+                favorites: [...state.favorites, action.payload]
             }
             break;
-    
+
         default:
             return state;
     }
@@ -22,11 +22,23 @@ const favoriteReducer = (state: any, action: any) => {
 const Characters = () => {
 
     const [characters, setCharacters] = useState([]);
+    const [search, setSearch] = useState<string>('');
     const [favorites, dispatch] = useReducer(favoriteReducer, initialState);
-    
+
+    const handleSearch = (ev: any) => {
+        setSearch(ev.target.value);
+    };
+
     const handleClick = (favorite: any) => {
-        dispatch({type: ADD_TO_FAVORITES, payload: favorite});
+        dispatch({ type: ADD_TO_FAVORITES, payload: favorite });
     }
+
+    //const filteredUsers = 
+    //characters.filter((character:any) => character.name.toLowerCase().includes(search.toLowerCase())); 
+
+    const filteredUsers = useMemo(() =>
+        characters.filter((character: any) => character.name.toLowerCase().includes(search.toLowerCase()))
+        , [characters, search]);
 
     useEffect(() => {
         fetch('https://rickandmortyapi.com/api/character')
@@ -43,12 +55,16 @@ const Characters = () => {
                 </li>
             ))}
 
-           {characters.map((character: any) => (
-               <div key={character.id}>
-                   <h2>{character?.name}</h2>
-                   <button type="button" onClick={() => handleClick(character)}>Agregar a favorito</button>
-               </div>
-           ))}
+            <div>
+                <input type="text" value={search} onChange={handleSearch} />
+            </div>
+
+            {filteredUsers?.map((character: any) => (
+                <div key={character.id}>
+                    <h2>{character?.name}</h2>
+                    <button type="button" onClick={() => handleClick(character)}>Agregar a favorito</button>
+                </div>
+            ))}
         </div>
     )
 }
