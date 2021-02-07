@@ -13,7 +13,7 @@ const Characters = () => {
 
     return (
         <div>
-           {characters.map((character) => (
+           {characters.map((character: any) => (
                <h2>{character?.name}</h2>
            ))}
         </div>
