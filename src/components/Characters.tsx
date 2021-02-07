@@ -23,7 +23,7 @@ const Characters = () => {
 
     const [characters, setCharacters] = useState([]);
     const [favorites, dispatch] = useReducer(favoriteReducer, initialState);
-
+    
     const handleClick = (favorite: any) => {
         dispatch({type: ADD_TO_FAVORITES, payload: favorite});
     }
@@ -37,7 +37,11 @@ const Characters = () => {
 
     return (
         <div>
-            {favorites.favorites.map((favorite) => ())}
+            {favorites.favorites.map((favorite: any) => (
+                <li key={favorite.id}>
+                    {favorite.name}
+                </li>
+            ))}
 
            {characters.map((character: any) => (
                <div key={character.id}>
