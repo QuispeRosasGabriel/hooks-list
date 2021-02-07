@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { Props } from 'react'
 
-const Search = ({search, searchInputRef, handleSearch}) => {
-    
+const Search = ({ search, searchInputRef, handleSearch }: any) => {
+
     return (
         <div>
             <input type="text" value={search}

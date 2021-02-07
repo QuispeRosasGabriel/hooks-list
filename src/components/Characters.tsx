@@ -1,11 +1,13 @@
-import React, { useState,
-     useEffect,
-     useReducer,
-     useMemo,
-     useRef,
-     useCallback } from 'react'
+import React, {
+    useState,
+    useEffect,
+    useReducer,
+    useMemo,
+    useRef,
+    useCallback
+} from 'react'
 import { ADD_TO_FAVORITES } from '../global/Types';
-import Search from  './Search';
+import Search from './Search';
 
 const initialState = {
     favorites: [],
@@ -36,6 +38,13 @@ const Characters = () => {
     /*const handleSearch = () => {
         setSearch(searchInputRef?.current?.value);
     };*/
+
+    const handleSearch = useCallback(
+        () => {
+            setSearch(searchInputRef?.current?.value);
+        },
+        [],
+    )
 
     const handleClick = (favorite: any) => {
         dispatch({ type: ADD_TO_FAVORITES, payload: favorite });
